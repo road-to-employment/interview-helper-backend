@@ -5,8 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.board.controller.request_form.BoardCreateRequestForm;
 import road_to_employment.interview_helper.board.controller.response_form.BoardCreateResponseForm;
+import road_to_employment.interview_helper.board.controller.response_form.BoardListResponseForm;
+import road_to_employment.interview_helper.board.entity.Board;
 import road_to_employment.interview_helper.board.service.BoardService;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
+import road_to_employment.interview_helper.board.service.response.BoardListResponse;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,5 +27,13 @@ public class BoardController {
 
         BoardCreateResponse response = boardService.create(boardCreateRequestForm.toBoardCreateRequest());
         return BoardCreateResponseForm.from(response);
+    }
+
+    @GetMapping("/list")
+    public List<BoardListResponseForm> list() {
+        log.info("board controller -> list() called!");
+
+        List<BoardListResponse> responseList = boardService.list();
+        return responseList.stream().map(BoardListResponseForm::from).collect(Collectors.toList());
     }
 }
