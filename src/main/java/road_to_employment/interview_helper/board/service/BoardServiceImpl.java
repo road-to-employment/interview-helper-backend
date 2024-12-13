@@ -10,6 +10,7 @@ import road_to_employment.interview_helper.board.service.request.BoardCreateRequ
 import road_to_employment.interview_helper.board.service.request.BoardUpdateRequest;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
 import road_to_employment.interview_helper.board.service.response.BoardListResponse;
+import road_to_employment.interview_helper.board.service.response.BoardReadResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,10 +39,18 @@ public class BoardServiceImpl implements BoardService {
         return boardList.stream().map(BoardListResponse::from).collect(Collectors.toList());
     }
 
+    @Override
+    public BoardReadResponse read(Long id) {
+        log.info("board service -> read() called!");
+        Optional<Board> maybeBoard = boardRepository.findById(id);
+
+        Board board = maybeBoard.orElse(null);
+        return BoardReadResponse.from(board);
+    }
+
     @Transactional
     @Override
     public BoardReadResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
-        System.out.println(boardUpdateRequest.getTitle());
         log.info("board service -> update() called!");
         Optional<Board> maybeBoard = boardRepository.findById(id);
 
