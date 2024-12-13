@@ -7,9 +7,11 @@ import road_to_employment.interview_helper.board.controller.request_form.BoardCr
 import road_to_employment.interview_helper.board.controller.response_form.BoardCreateResponseForm;
 import road_to_employment.interview_helper.board.controller.response_form.BoardListResponseForm;
 import road_to_employment.interview_helper.board.controller.request_form.BoardUpdateRequestForm;
+import road_to_employment.interview_helper.board.controller.response_form.BoardReadResponseForm;
 import road_to_employment.interview_helper.board.service.BoardService;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
 import road_to_employment.interview_helper.board.service.response.BoardListResponse;
+import road_to_employment.interview_helper.board.service.response.BoardReadResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +39,17 @@ public class BoardController {
         return responseList.stream().map(BoardListResponseForm::from).collect(Collectors.toList());
     }
 
+    @GetMapping("/read/{id}")
+    public BoardReadResponseForm read(@PathVariable Long id) {
+        log.info("board controller -> read() called!");
+
+        BoardReadResponse response = boardService.read(id);
+        return BoardReadResponseForm.from(response);
+    }
+
     @PostMapping("/modify/{id}")
     public BoardReadResponseForm update(@PathVariable Long id, @RequestBody BoardUpdateRequestForm boardUpdateRequestForm) {
         log.info("board controller -> update() called!");
-        System.out.println(boardUpdateRequestForm.getTitle());
 
         BoardReadResponse response = boardService.update(id, boardUpdateRequestForm.toBoardUpdateRequest());
         return BoardReadResponseForm.from(response);
