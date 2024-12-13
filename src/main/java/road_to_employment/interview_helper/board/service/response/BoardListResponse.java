@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 @Getter
 @RequiredArgsConstructor
 public class BoardListResponse {
-    private final int id;
+    private final Long id;
     private final String title;
     private final String writer;
     private final ZonedDateTime updateDate;

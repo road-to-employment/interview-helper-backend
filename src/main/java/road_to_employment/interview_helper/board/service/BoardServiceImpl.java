@@ -1,15 +1,15 @@
 package road_to_employment.interview_helper.board.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import road_to_employment.interview_helper.board.entity.Board;
 import road_to_employment.interview_helper.board.repository.BoardRepository;
 import road_to_employment.interview_helper.board.service.request.BoardCreateRequest;
+import road_to_employment.interview_helper.board.service.request.BoardUpdateRequest;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
 import road_to_employment.interview_helper.board.service.response.BoardListResponse;
-import road_to_employment.interview_helper.board.service.response.BoardReadResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,12 +38,21 @@ public class BoardServiceImpl implements BoardService {
         return boardList.stream().map(BoardListResponse::from).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
-    public BoardReadResponse read(Long id) {
-        log.info("board service -> read() called!");
+    public BoardReadResponse update(Long id, BoardUpdateRequest boardUpdateRequest) {
+        System.out.println(boardUpdateRequest.getTitle());
+        log.info("board service -> update() called!");
         Optional<Board> maybeBoard = boardRepository.findById(id);
 
         Board board = maybeBoard.orElse(null);
+
+        if (board != null) {
+            board.updatedBoard(
+                    boardUpdateRequest.getTitle(),
+                    boardUpdateRequest.getContent()
+            );
+        }
 
         return BoardReadResponse.from(board);
     }
