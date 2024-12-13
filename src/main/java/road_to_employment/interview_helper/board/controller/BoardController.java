@@ -47,7 +47,7 @@ public class BoardController {
         return BoardReadResponseForm.from(response);
     }
 
-    @PostMapping("/modify/{id}")
+    @PutMapping("/modify/{id}")
     public BoardReadResponseForm update(@PathVariable Long id, @RequestBody BoardUpdateRequestForm boardUpdateRequestForm) {
         log.info("board controller -> update() called!");
 
