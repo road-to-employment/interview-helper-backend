@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String title;
     private String writer;
@@ -27,6 +27,11 @@ public class Board {
     @PreUpdate
     public void preUpdate() {
         this.updateDate = ZonedDateTime.now();
+    }
+
+    public void updatedBoard(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     public Board(String title, String writer, String content) {

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import road_to_employment.interview_helper.board.controller.request_form.BoardCreateRequestForm;
 import road_to_employment.interview_helper.board.controller.response_form.BoardCreateResponseForm;
 import road_to_employment.interview_helper.board.controller.response_form.BoardListResponseForm;
-import road_to_employment.interview_helper.board.entity.Board;
+import road_to_employment.interview_helper.board.controller.request_form.BoardUpdateRequestForm;
 import road_to_employment.interview_helper.board.service.BoardService;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
 import road_to_employment.interview_helper.board.service.response.BoardListResponse;
@@ -35,5 +35,14 @@ public class BoardController {
 
         List<BoardListResponse> responseList = boardService.list();
         return responseList.stream().map(BoardListResponseForm::from).collect(Collectors.toList());
+    }
+
+    @PostMapping("/modify/{id}")
+    public BoardReadResponseForm update(@PathVariable Long id, @RequestBody BoardUpdateRequestForm boardUpdateRequestForm) {
+        log.info("board controller -> update() called!");
+        System.out.println(boardUpdateRequestForm.getTitle());
+
+        BoardReadResponse response = boardService.update(id, boardUpdateRequestForm.toBoardUpdateRequest());
+        return BoardReadResponseForm.from(response);
     }
 }
