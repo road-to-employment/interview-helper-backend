@@ -13,4 +13,5 @@ public interface BoardService {
     List<BoardListResponse> list();
     BoardReadResponse read(Long id);
     BoardReadResponse update(Long id, BoardUpdateRequest boardUpdateRequest);
+    Boolean delete(Long id);
 }

@@ -65,4 +65,21 @@ public class BoardServiceImpl implements BoardService {
 
         return BoardReadResponse.from(board);
     }
+
+    @Transactional
+    @Override
+    public Boolean delete(Long id) {
+        log.info("board service -> delete() called!");
+        Optional<Board> maybeBoard = boardRepository.findById(id);
+
+        Board board = maybeBoard.orElse(null);
+
+        if (board == null) {
+            return false;
+        }
+        else {
+            boardRepository.delete(board);
+            return true;
+        }
+    }
 }

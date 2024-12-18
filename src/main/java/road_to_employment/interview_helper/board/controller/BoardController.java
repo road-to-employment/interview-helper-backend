@@ -8,6 +8,7 @@ import road_to_employment.interview_helper.board.controller.response_form.BoardC
 import road_to_employment.interview_helper.board.controller.response_form.BoardListResponseForm;
 import road_to_employment.interview_helper.board.controller.request_form.BoardUpdateRequestForm;
 import road_to_employment.interview_helper.board.controller.response_form.BoardReadResponseForm;
+import road_to_employment.interview_helper.board.entity.Board;
 import road_to_employment.interview_helper.board.service.BoardService;
 import road_to_employment.interview_helper.board.service.response.BoardCreateResponse;
 import road_to_employment.interview_helper.board.service.response.BoardListResponse;
@@ -53,5 +54,13 @@ public class BoardController {
 
         BoardReadResponse response = boardService.update(id, boardUpdateRequestForm.toBoardUpdateRequest());
         return BoardReadResponseForm.from(response);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Boolean delete(@PathVariable Long id) {
+        log.info("board controller -> delete() called!");
+
+        Boolean response = boardService.delete(id);
+        return response;
     }
 }
