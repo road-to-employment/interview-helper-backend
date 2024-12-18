@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: ${PORT}
 spring:
   application:
     name: interview_helper
   datasource:
-    url: jdbc:mysql://localhost:3306/interview_helper?allowpublickeyretrieval=true&usessl=false&serverTimezone=UTC
-    username: RTE
-    password: RTE@123
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL8Dialect
   jpa:
@@ -21,6 +21,6 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: 127.0.0.1
-      port: 6379
-      password: eddi@123
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}

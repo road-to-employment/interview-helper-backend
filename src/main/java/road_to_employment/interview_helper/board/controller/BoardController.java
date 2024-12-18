@@ -25,7 +25,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/create")
-    public BoardCreateResponseForm create(@ModelAttribute BoardCreateRequestForm boardCreateRequestForm) {
+    public BoardCreateResponseForm create(@RequestBody BoardCreateRequestForm boardCreateRequestForm) {
         log.info("board controller -> create() called!");
 
         BoardCreateResponse response = boardService.create(boardCreateRequestForm.toBoardCreateRequest());
