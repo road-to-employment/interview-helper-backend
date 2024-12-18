@@ -177,3 +177,12 @@ Temporary Items
 
 # exclude .env
 .env
+
+# exclude .gradle
+/.gradle
+
+# exclude .idea
+/.idea
+
+# exclude build
+/build
