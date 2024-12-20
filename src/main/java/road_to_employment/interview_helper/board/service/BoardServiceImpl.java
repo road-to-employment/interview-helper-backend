@@ -3,6 +3,7 @@ package road_to_employment.interview_helper.board.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import road_to_employment.interview_helper.board.entity.Board;
 import road_to_employment.interview_helper.board.repository.BoardRepository;
@@ -34,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardListResponse> list() {
         log.info("board service -> list() called!");
-        List<Board> boardList = boardRepository.findAll();
+        List<Board> boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "updateDate"));
 
         return boardList.stream().map(BoardListResponse::from).collect(Collectors.toList());
     }
