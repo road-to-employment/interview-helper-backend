@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public enum Role {
-    USER("ROLE_USER", "일반 사용자"),
-    ADMIN("ROLE_ADMIN", "관리자"),
-    BLACKLIST("ROLE_BLACKLIST", "블랙리스트");
+    USER("USER", "일반 사용자"),
+    ADMIN("ADMIN", "관리자");
 
-    private final String key;
+    private final String name;
     private final String title;
+
+    private Role(String name, String title) {
+        this.name = name;
+        this.title = title;
+    }
 }

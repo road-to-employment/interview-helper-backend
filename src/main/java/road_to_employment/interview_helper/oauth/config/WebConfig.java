@@ -1,4 +1,4 @@
-package road_to_employment.interview_helper;
+package road_to_employment.interview_helper.oauth.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +12,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        System.out.println("CORS_ALLOWED_ORIGIN: " + allowedOrigins);
         registry.addMapping("/**")
                 .allowedOrigins(allowedOrigins)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
                 .allowCredentials(true);
     }
 }

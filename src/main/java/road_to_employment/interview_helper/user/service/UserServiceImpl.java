@@ -2,61 +2,45 @@ package road_to_employment.interview_helper.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import road_to_employment.interview_helper.user.entity.Role;
 import road_to_employment.interview_helper.user.entity.User;
 import road_to_employment.interview_helper.user.repository.UserRepository;
-import road_to_employment.interview_helper.user.dto.request.RegisterDto;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@EnableJpaRepositories(basePackages = "road_to_employment.interview_helper.user")
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User findByUserNo(Long userNo) {
-        return userRepository.findById(userNo)
-                .orElseThrow(IllegalStateException::new);
+    public User findByEmail(String email) {
+        Optional<User> maybeUser = userRepository.findByEmail(email);
+
+        return maybeUser.orElse(null);
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByProviderId(String providerId) {
+        Optional<User> maybeUser = userRepository.findByProviderId(providerId);
+
+        return maybeUser.orElse(null);
     }
 
     @Override
-    @Transactional
-    public User saveUser(RegisterDto registerDto) {
-        userRepository.findByEmail(registerDto.getEmail())
-                .ifPresent(user -> {throw new IllegalArgumentException("이미 존재하는 회원입니다.");});
-
-        User user = registerDto.toEntity();
-
-        User savedUser = userRepository.save(user);
-
-        return savedUser;
-    }
-
-    @Override
-    @Transactional
-    public void removeUser(SecurityUserDto user) {
-        User findUser = userRepository.findById(user.getUserNo())
-                .orElseThrow(IllegalStateException::new);
-        userRepository.delete(findUser);
-    }
-
-    @Override
-    @Transactional
-    public User updateUser(String email, String name, String picture) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-
-        return user.update(name, picture);
+    public User create(String name, String email, String picture, String provider, String providerId, String registerId) {
+        User user = User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .provider(provider)
+                .providerId(providerId)
+                .registerId(registerId)
+                .role(Role.USER).build();
+        return userRepository.save(user);
     }
 }

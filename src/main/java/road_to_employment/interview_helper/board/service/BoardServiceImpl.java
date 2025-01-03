@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 import road_to_employment.interview_helper.board.entity.Board;
 import road_to_employment.interview_helper.board.repository.BoardRepository;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@EnableJpaRepositories(basePackages = "road_to_employment.interview_helper.board")
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
