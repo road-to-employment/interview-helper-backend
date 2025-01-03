@@ -186,3 +186,6 @@ Temporary Items
 
 # exclude build
 /build
+
+# exclude oauth settings
+/src/main/resources/application-oauth.yml
